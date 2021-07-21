@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Wallet"
+             x:Class="TourismAppV2.Views.FinancePage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Frame BackgroundColor="White" Margin="20,20,20,10" Padding="20,10,20,10">
+                <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                    <Image Source="coins.png" HorizontalOptions="Start" WidthRequest="50" />
+                    <StackLayout VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                        <Label Text="Account Balance" TextColor="Black" />
+                        <Label Text="USD 7900" FontSize="16" TextColor="DarkSeaGreen" />
+                    </StackLayout>
+                    <Frame Padding="20,10,20,10" BackgroundColor="Orange" HorizontalOptions="End" Margin="0" CornerRadius="20" VerticalOptions="Center">
+                        <Label Text="Deposit" />
+                    </Frame>
+                </StackLayout>
+            </Frame>
+            <Label Text="Your transaction history" Padding="20,10,20,10" />
+            <StackLayout Padding="20">
+                <Label Text="No history" HorizontalTextAlignment="Center" FontAttributes="Italic" />
+                <Label Text="Looks like you have not spent on anything yet" FontSize="11" HorizontalTextAlignment="Center" FontAttributes="Italic" />
+            </StackLayout>
+            
+            <CollectionView>
+
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

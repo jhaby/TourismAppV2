@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Your profile"
+             x:Class="TourismAppV2.Views.ProfilePage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Frame CornerRadius="100" 
+                   HeightRequest="100"
+                   WidthRequest="100"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Padding="0"
+                   Margin="10"
+                   IsClippedToBounds="True">
+                
+                <Image Source="lion.jpg" 
+                       Aspect="AspectFill"
+                       HeightRequest="100"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+            </Frame>
+
+            <Label Text="Change photo" HorizontalTextAlignment="Center" TextColor="DodgerBlue" />
+            <StackLayout Margin="20">
+                <Label Text="Name" />
+                <Label Text="{Binding Fullname, FallbackValue='Enter name'}" TextColor="Black" FontSize="18" />
+                <BoxView HeightRequest="1" BackgroundColor="Black" />
+
+                <Label Text="Email" />
+                <Label Text="{Binding Email, FallbackValue='Enter your email'}" TextColor="Black" FontSize="18" />
+                <BoxView HeightRequest="1" BackgroundColor="Black" />
+                
+                <Label Text="Contact" />
+                <Label Text="{Binding Contact, FallbackValue='Enter contact'}" TextColor="Black" FontSize="18" />
+                <BoxView HeightRequest="1" BackgroundColor="Black" />
+
+                <Label Text="Gender" />
+                <Label Text="{Binding Gender, FallbackValue='Male'}" TextColor="Black" FontSize="18" />
+                <BoxView HeightRequest="1" BackgroundColor="Black" />
+            </StackLayout>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

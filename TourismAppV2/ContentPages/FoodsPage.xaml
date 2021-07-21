@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TourismAppV2.ContentPages.FoodsPage"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <CollectionView x:Name="timeline" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame IsClippedToBounds="False" Padding="0,0,0,10" BorderColor="LightGray"  BackgroundColor="White">
+                        <FlexLayout Direction="Column" IsClippedToBounds="True" >
+                            <Grid>
+                                <Image Source="{Binding Image}"  />
+                                <StackLayout>
+                                    <StackLayout.Background>
+                                        <LinearGradientBrush StartPoint="1,0" EndPoint="1,1">
+                                            <GradientStop Offset="0.2" Color="Transparent"/>
+                                            <GradientStop Offset="0.6" Color="#99090428" />
+                                            <GradientStop Offset="0.95" Color="#F2090428" />
+                                            <GradientStop Offset="1" Color="#090428"/>
+                                        </LinearGradientBrush>
+                                    </StackLayout.Background>
+                                    
+                                </StackLayout>
+                                <Label Text="{Binding Name}" Padding="10,0,10,60" TextColor="White"
+                                       VerticalOptions="End" FontSize="30" />
+                                <Label Text="{Binding Location}" TextColor="Gold" FontAttributes="Bold" VerticalOptions="End" Padding="10,10,10,40" />
+                                <Label Text="{Binding WorkingHours, StringFormat='Working hours: {0}'}" TextColor="White" VerticalOptions="End" Padding="10,10,10,15" />
+                            </Grid>
+                            <StackLayout Orientation="Horizontal">
+                                <StackLayout Padding="10">
+                                    <Image Source="heart.png" WidthRequest="30" HeightRequest="30" />
+                                    <Label Text="{Binding Likes, StringFormat='{0} Likes'}" HorizontalTextAlignment="Center" />
+                                </StackLayout>
+                                <StackLayout Padding="10">
+                                    <Image Source="share.png" WidthRequest="30" HeightRequest="30" />
+                                    <Label Text="Share" HorizontalTextAlignment="Center" />
+                                </StackLayout>
+                                <StackLayout HorizontalOptions="EndAndExpand" Margin="0,0,10,0" Padding="10">
+                                    <Image Source="pin.png" WidthRequest="30" HeightRequest="30" />
+                                    <Label Text="Pin" HorizontalTextAlignment="Center" />
+                                </StackLayout>
+                            </StackLayout>
+                        </FlexLayout>
+                    </Frame>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </ContentPage.Content>
+</ContentPage>

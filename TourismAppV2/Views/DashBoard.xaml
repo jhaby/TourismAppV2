@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:TourismAppV2.ContentPages"
+            x:Class="TourismAppV2.Views.DashBoard"
+            NavigationPage.HasNavigationBar="False"
+            NavigationPage.HasBackButton="False">
+
+    <NavigationPage Title="Hotels">
+        <x:Arguments>
+            <local:Accomodation />
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage Title="Destinations">
+        <x:Arguments>
+            <local:SitesPage />
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage Title="Restaurants">
+        <x:Arguments>
+            <local:FoodsPage />
+        </x:Arguments>
+    </NavigationPage>
+</TabbedPage>

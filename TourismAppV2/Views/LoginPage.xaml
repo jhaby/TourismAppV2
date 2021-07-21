@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             NavigationPage.HasNavigationBar="False"
+              xmlns:enhancedEntry="clr-namespace:LeoJHarris.FormsPlugin.Abstractions;assembly=LeoJHarris.FormsPlugin.Abstractions"
+             x:Class="TourismAppV1.Views.LoginPage">
+    <ContentPage.Content>
+        <Grid>
+            <Image HeightRequest="500" VerticalOptions="StartAndExpand"  Source="photo1.jpg" />
+            <Grid>
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="1,0" EndPoint="1,1">
+                        <GradientStop Offset="0.2" Color="#99090428" />
+                        <GradientStop Offset="0.45" Color="#F2090428" />
+                        <GradientStop Offset="1" Color="#090428"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+                <Label Text="Canine Safaris" TextColor="White" HorizontalTextAlignment="Center" Margin="20" FontSize="35" FontAttributes="Bold" />
+
+                <StackLayout VerticalOptions="EndAndExpand" Padding="0,0,0,50">
+                    
+                    <Entry  Placeholder="Email" x:Name="Email" Keyboard="Email" TextColor="White" PlaceholderColor="White" Margin="20, 0, 20, 20" />
+                    <Entry  Placeholder="Password" x:Name="Password" PlaceholderColor="White" TextColor="White" IsPassword="True" Keyboard="Text" Margin="20, 0, 20, 20" />
+
+                    <ActivityIndicator IsRunning="True" IsVisible="false" x:Name="indicator" Margin="10" />
+
+                    <Button Text="Login Now" Clicked="Login_Clicked" CornerRadius="20" TextColor="White" Margin="30, 0, 20, 20" BackgroundColor="#A5005B"/>
+                    <Button Text="Signup" Clicked="Button_Clicked" CornerRadius="20" TextColor="White" Margin="30, 0, 20, 20" BackgroundColor="Transparent" BorderColor="White" BorderWidth="1" />
+                    <Label Style="{StaticResource Label}" TextColor="White" Text="Forgot password?" HorizontalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
+                
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

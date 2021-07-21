@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="Create a new account"
+              xmlns:enhancedEntry="clr-namespace:LeoJHarris.FormsPlugin.Abstractions;assembly=LeoJHarris.FormsPlugin.Abstractions"
+             x:Class="TourismAppV1.Views.Signup">
+    <ContentPage.Content>
+        <ScrollView HorizontalOptions="FillAndExpand">
+            <StackLayout Padding="30" VerticalOptions="Fill" Orientation="Vertical" HorizontalOptions="Fill">
+                <Label Text="Signup!" FontSize="35" Margin="0,0,0,20" HorizontalOptions="Center" FontAttributes="Bold" />
+                <enhancedEntry:EnhancedEntry x:Name="fname" BorderColor="Black" BorderWidth="1" Placeholder="Firstname*" />
+                <enhancedEntry:EnhancedEntry x:Name="lname" BorderColor="Black" BorderWidth="1" Placeholder="Lastname*" />
+                <enhancedEntry:EnhancedEntry BorderColor="Black" BorderWidth="1" x:Name="Email" Placeholder="Email*" Keyboard="Email" />
+                <StackLayout Margin="0,10,0,0">
+                    <Label Text="What's your gender?*" />
+                    <RadioButton Content="Male" IsChecked="True" CheckedChanged="RadioButton_CheckedChanged" Value="male"></RadioButton>
+                    <RadioButton Content="Female" Value="female" CheckedChanged="RadioButton_CheckedChanged" />
+                    <RadioButton Content="Other" Value="other" CheckedChanged="RadioButton_CheckedChanged"></RadioButton>
+                </StackLayout>
+                <enhancedEntry:EnhancedEntry x:Name="country" BorderColor="Black" BorderWidth="1" Placeholder="Country*" />
+                <enhancedEntry:EnhancedEntry x:Name="phone" BorderColor="Black" BorderWidth="1" Placeholder="Phone*" Keyboard="Telephone" />
+                <enhancedEntry:EnhancedEntry  BorderColor="Black" BorderWidth="1" x:Name="Password" Placeholder="Password" IsPassword="True" />
+                <enhancedEntry:EnhancedEntry BorderColor="Black" BorderWidth="1" x:Name="confirmPass" Placeholder="Confirm password" IsPassword="True" />
+                <Label Text="(Minimum password length should be 8 characters)" Margin="0,0,0,10" />
+                <StackLayout Orientation="Horizontal">
+                    <CheckBox x:Name="check" />
+                    <Label Style="{StaticResource Label}" Text="I have read and agree to Canine Safaris' Terms and Conditions" />
+                </StackLayout>
+                <ActivityIndicator IsVisible="false" IsRunning="True" x:Name="indicator" />
+                <Button Text="Signup" Clicked="Signup_Clicked" CornerRadius="10" Margin="0,20,0,0" BackgroundColor="#A5005B" TextColor="White" />
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

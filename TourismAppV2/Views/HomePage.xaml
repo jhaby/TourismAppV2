@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core" xmlns:local="clr-namespace:TourismAppV2.Views"
+            android:TabbedPage.ToolbarPlacement="Bottom"
+             BarBackgroundColor="White"
+             x:Class="TourismAppV2.Views.HomePage"
+            NavigationPage.HasNavigationBar="False"
+            NavigationPage.HasBackButton="False"
+            SelectedTabColor="#990651" 
+            UnselectedTabColor="#141414">
+    <NavigationPage Title="Home" IconImageSource="home.png">
+        <x:Arguments>
+            <local:DashBoard />
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage Title="My Wallet" IconImageSource="wallet.png">
+        <x:Arguments>
+            <local:FinancePage />
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage Title="My Profile" IconImageSource="profile.png">
+        <x:Arguments>
+            <local:ProfilePage />
+        </x:Arguments>
+    </NavigationPage>
+    
+</TabbedPage>
