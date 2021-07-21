@@ -6,6 +6,8 @@ namespace TourismAppV2.Helpers
 {
     public class FirebaseAssets
     {
-        public static string WebAPIKey = "AIzaSyDifcTwsESIISP0ndioq29N6Sx0JCN6WEg";
+        public static readonly string WebAPIKey = "AIzaSyDifcTwsESIISP0ndioq29N6Sx0JCN6WEg";
+        public static readonly string FirebaseDBUri = "https://tourismapp-f46a9-default-rtdb.europe-west1.firebasedatabase.app/";
+        public static readonly string FirebaseStorageUri = "gs://tourismapp-f46a9.appspot.com/";
     }
 }
