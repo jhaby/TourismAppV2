@@ -7,15 +7,27 @@ namespace TourismAppV2.Models
 {
     public class ProfileModel : INotifyPropertyChanged
     {
-        private string fullname;
+        private bool agreement;
+        private string confirmPassword;
+        private string country;
         private string email;
-        private string contact;
-        private string gender;
+        private string firstname;
+        private bool isRegularUser;
+        private bool isServiceProvider;
+        private string lastname;
+        private string password;
+        private string phone;
 
-        public string Fullname { get => fullname; set { fullname = value; OnPropertyChanged("Fullname"); } }
-        public string Email { get => email; set{ email = value; OnPropertyChanged("Email"); } }
-        public string Contact { get => contact; set { contact = value; OnPropertyChanged("Contact"); } }
-        public string Gender { get => gender; set{ gender = value; OnPropertyChanged("Gender"); } }
+        public bool Agreement { get => agreement; set => agreement = value; }
+        public string ConfirmPassword { get => confirmPassword; set => confirmPassword = value; }
+        public string Country { get => country; set => country = value; }
+        public string Email { get => email; set => email = value; }
+        public string Firstname { get => firstname; set => firstname = value; }
+        public bool IsRegularUser { get => isRegularUser; set => isRegularUser = value; }
+        public bool IsServiceProvider { get => isServiceProvider; set => isServiceProvider = value; }
+        public string Lastname { get => lastname; set => lastname = value; }
+        public string Password { get => password; set => password = value; }
+        public string Phone { get => phone; set => phone = value; }
         private void OnPropertyChanged(string member) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(member));
 
         public event PropertyChangedEventHandler PropertyChanged;

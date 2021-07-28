@@ -17,24 +17,19 @@ namespace TourismAppV2.Views
         public ProfilePage()
         {
             InitializeComponent();
+
+            ProfileModel profile = new ProfileModel();
             string userdata = Preferences.Get("userdata", null);
             if (!string.IsNullOrEmpty(userdata))
             {
-                dynamic data = JsonConvert.DeserializeObject(userdata);
-                ProfileModel profile = new ProfileModel
-                {
-                    Fullname = data.Firstname +" "+ data.Lastname,
-                    Email = data.Email,
-                    Contact = data.Phone,
-                    Gender = data.Gender
-                };
-
+                profile = JsonConvert.DeserializeObject<ProfileModel>(userdata);
+                
                 BindingContext = profile;
             }
             else
             {
 
-                BindingContext = new ProfileModel();
+                BindingContext = profile;
             }
         }
     }

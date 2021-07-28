@@ -9,6 +9,10 @@ using TourismAppV2.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using TourismAppV2.Helpers;
+using TourismAppV2.Firebase;
+using Xamarin.Essentials;
+using Rg.Plugins.Popup.Services;
+using TourismAppV2.Dialogs.CustomDialogs;
 
 namespace TourismAppV1.Views
 {
@@ -37,13 +41,16 @@ namespace TourismAppV1.Views
             }
             else
             {
-                indicator.IsVisible = true;
+                await PopupNavigation.Instance.PushAsync(new LoadingDialog("Logging in..."));
                 var authprovider = new FirebaseAuthProvider(new FirebaseConfig(FirebaseAssets.WebAPIKey));
                 try
                 {
                     var authrequest = await authprovider.SignInWithEmailAndPasswordAsync(Email.Text, Password.Text);
                     var response =  authrequest.User;
-                    var credentials = JsonConvert.SerializeObject(response);
+
+                    var firebase = new FirebaseDatabaseRequests();
+                    var userdata = await firebase.GetProfileData(Email.Text);
+                    Preferences.Set("userdata", JsonConvert.SerializeObject(userdata));
 
                     await Navigation.PushAsync(new HomePage());
                 }
@@ -51,7 +58,10 @@ namespace TourismAppV1.Views
                 {
                     await DisplayAlert("Access denied", ex.Message, "OK");
                 }
-                indicator.IsVisible = false;
+                finally
+                {
+                    await PopupNavigation.Instance.PopAsync();
+                }
             }
             
         }

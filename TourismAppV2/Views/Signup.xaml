@@ -5,29 +5,37 @@
               xmlns:enhancedEntry="clr-namespace:LeoJHarris.FormsPlugin.Abstractions;assembly=LeoJHarris.FormsPlugin.Abstractions"
              x:Class="TourismAppV1.Views.Signup">
     <ContentPage.Content>
-        <ScrollView HorizontalOptions="FillAndExpand">
-            <StackLayout Padding="30" VerticalOptions="Fill" Orientation="Vertical" HorizontalOptions="Fill">
-                <Label Text="Signup!" FontSize="35" Margin="0,0,0,20" HorizontalOptions="Center" FontAttributes="Bold" />
-                <enhancedEntry:EnhancedEntry x:Name="fname" BorderColor="Black" BorderWidth="1" Placeholder="Firstname*" />
-                <enhancedEntry:EnhancedEntry x:Name="lname" BorderColor="Black" BorderWidth="1" Placeholder="Lastname*" />
-                <enhancedEntry:EnhancedEntry BorderColor="Black" BorderWidth="1" x:Name="Email" Placeholder="Email*" Keyboard="Email" />
-                <StackLayout Margin="0,10,0,0">
-                    <Label Text="What's your gender?*" />
-                    <RadioButton Content="Male" IsChecked="True" CheckedChanged="RadioButton_CheckedChanged" Value="male"></RadioButton>
-                    <RadioButton Content="Female" Value="female" CheckedChanged="RadioButton_CheckedChanged" />
-                    <RadioButton Content="Other" Value="other" CheckedChanged="RadioButton_CheckedChanged"></RadioButton>
+        <ScrollView>
+            <StackLayout  VerticalOptions="FillAndExpand">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Button Text="Ordinary user" x:Name="ordinary" Clicked="SwitchBtn_Clicked" BackgroundColor="#A5005B" TextColor="White" BorderColor="#A5005B" BorderWidth="1" Margin="0, 10, -4 ,0" />
+                    <Button Text="Service provider" x:Name="provider" Clicked="SwitchBtn_Clicked" BackgroundColor="White" TextColor="#A5005B" BorderColor="#A5005B" BorderWidth="1" Margin="-4, 10, 0 ,0" />
                 </StackLayout>
-                <enhancedEntry:EnhancedEntry x:Name="country" BorderColor="Black" BorderWidth="1" Placeholder="Country*" />
-                <enhancedEntry:EnhancedEntry x:Name="phone" BorderColor="Black" BorderWidth="1" Placeholder="Phone*" Keyboard="Telephone" />
-                <enhancedEntry:EnhancedEntry  BorderColor="Black" BorderWidth="1" x:Name="Password" Placeholder="Password" IsPassword="True" />
-                <enhancedEntry:EnhancedEntry BorderColor="Black" BorderWidth="1" x:Name="confirmPass" Placeholder="Confirm password" IsPassword="True" />
-                <Label Text="(Minimum password length should be 8 characters)" Margin="0,0,0,10" />
-                <StackLayout Orientation="Horizontal">
-                    <CheckBox x:Name="check" />
-                    <Label Style="{StaticResource Label}" Text="I have read and agree to Canine Safaris' Terms and Conditions" />
+                <StackLayout Padding="30" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
+                    <enhancedEntry:EnhancedEntry IsVisible="{Binding IsRegularUser, FallbackValue='True'}" Text="{Binding Firstname}" BorderColor="Black" BorderWidth="1" Placeholder="Firstname*" />
+                    <enhancedEntry:EnhancedEntry IsVisible="{Binding IsRegularUser, FallbackValue='True'}" Text="{Binding Lastname}" BorderColor="Black" BorderWidth="1" Placeholder="Lastname*" />
+                    <enhancedEntry:EnhancedEntry BorderColor="Black" BorderWidth="1" Text="{Binding Email}" IsVisible="{Binding IsRegularUser, FallbackValue='True'}" Placeholder="Email*" Keyboard="Email" />
+                    <StackLayout IsVisible="{Binding IsRegularUser, FallbackValue='True'}" Margin="0,10,0,0">
+                        <Label Text="What's your gender?*" />
+                        <RadioButton Content="Male" IsChecked="True" Value="male"></RadioButton>
+                        <RadioButton Content="Female" Value="female"  />
+                        <RadioButton Content="Other" Value="other"></RadioButton>
+                    </StackLayout>
+                    <enhancedEntry:EnhancedEntry IsVisible="{Binding IsRegularUser, FallbackValue='True'}" Text="{Binding Country}" BorderColor="Black" BorderWidth="1" Placeholder="Country*" />
+                    <enhancedEntry:EnhancedEntry IsVisible="{Binding IsRegularUser, FallbackValue='True'}" Text="{Binding Phone}" BorderColor="Black" BorderWidth="1" Placeholder="Phone*" Keyboard="Telephone" />
+
+                    <Label IsVisible="{Binding IsServiceProvider}"  Text="{Binding Organisation, FallbackValue='[Company Name]'}" FontSize="Large" Margin="0,0,0,20" />
+                    <enhancedEntry:EnhancedEntry IsVisible="{Binding IsServiceProvider}" Text="{Binding Username}" BorderColor="Black" BorderWidth="1" Placeholder="Username*" />
+
+                    <enhancedEntry:EnhancedEntry BorderColor="Black" BorderWidth="1" Text="{Binding Password}" Placeholder="Password" IsPassword="True" />
+                    <enhancedEntry:EnhancedEntry BorderColor="Black" BorderWidth="1" Text="{Binding ConfirmPassword}" Placeholder="Confirm password" IsPassword="True" />
+                    <Label Text="(Minimum password length should be 8 characters)" Margin="0,0,0,10" />
+                    <StackLayout Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding Agreement, FallbackValue='False'}" />
+                        <Label Style="{StaticResource Label}" Text="I have read and agree to Canine Safaris' Terms and Conditions" />
+                    </StackLayout>
+                    <Button Text="Signup" Clicked="Signup_Clicked" CornerRadius="10" Margin="0,20,0,0" BackgroundColor="#A5005B" TextColor="White" />
                 </StackLayout>
-                <ActivityIndicator IsVisible="false" IsRunning="True" x:Name="indicator" />
-                <Button Text="Signup" Clicked="Signup_Clicked" CornerRadius="10" Margin="0,20,0,0" BackgroundColor="#A5005B" TextColor="White" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

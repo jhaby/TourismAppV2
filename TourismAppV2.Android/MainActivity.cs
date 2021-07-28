@@ -14,6 +14,7 @@ namespace TourismAppV2.Droid
         {
             base.OnCreate(savedInstanceState);
 
+            Rg.Plugins.Popup.Popup.Init(this);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             Xamarin.Forms.Forms.SetFlags(new string[] { "AppTheme_Experimental", "SwipeView_Experimental", "Brush_Experimental", "RadioButton_Experimental", "IndicatorView_Experimental", "CarouselView_Experimental" });
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
@@ -25,6 +26,10 @@ namespace TourismAppV2.Droid
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+        public override void OnBackPressed()
+        {
+            Rg.Plugins.Popup.Popup.SendBackPressed(base.OnBackPressed);
         }
     }
 }

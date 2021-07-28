@@ -1,22 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             Title="Wallet"
+             Title="Wallet" 
              x:Class="TourismAppV2.Views.FinancePage">
     <ContentPage.Content>
+
         <StackLayout>
+            <StackLayout.GestureRecognizers>
+                <SwipeGestureRecognizer Direction="Down" Swiped="SwipeGestureRecognizer_Swiped" />
+            </StackLayout.GestureRecognizers>
             <Frame BackgroundColor="White" Margin="20,20,20,10" Padding="20,10,20,10">
                 <StackLayout Orientation="Horizontal" VerticalOptions="Center">
                     <Image Source="coins.png" HorizontalOptions="Start" WidthRequest="50" />
                     <StackLayout VerticalOptions="Center" HorizontalOptions="FillAndExpand">
                         <Label Text="Account Balance" TextColor="Black" />
-                        <Label Text="USD 7900" FontSize="16" TextColor="DarkSeaGreen" />
+                        <Label Text="USD 0.00" FontSize="16" TextColor="DarkSeaGreen" />
                     </StackLayout>
                     <Frame Padding="20,10,20,10" BackgroundColor="Orange" HorizontalOptions="End" Margin="0" CornerRadius="20" VerticalOptions="Center">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                        </Frame.GestureRecognizers>
                         <Label Text="Deposit" />
                     </Frame>
                 </StackLayout>
             </Frame>
+            <Label Text="Swipe down to refresh" HorizontalTextAlignment="Center" TextColor="CadetBlue" FontAttributes="Italic" Padding="3,3,20,10" />
             <Label Text="Your transaction history" Padding="20,10,20,10" />
             <StackLayout Padding="20">
                 <Label Text="No history" HorizontalTextAlignment="Center" FontAttributes="Italic" />
