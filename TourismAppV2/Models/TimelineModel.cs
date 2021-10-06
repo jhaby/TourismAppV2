@@ -6,7 +6,7 @@ namespace TourismAppV2.Models
 {
     public class TimelineModel
     {
-        public int ItemId { get; set; }
+        public string ItemId { get; set; }
         public string CardAuthor { get; set; }
         public string Icon { get; set; }
         public string CardImage { get; set; }

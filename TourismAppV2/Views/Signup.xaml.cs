@@ -83,7 +83,7 @@ namespace TourismAppV1.Views
         {
             try
             {
-                await PopupNavigation.Instance.PushAsync(new LoadingDialog("Creating your account.  Please give us a moment..."));
+                await PopupNavigation.Instance.PushAsync(new LoadingDialog("Creating your account. Please give us a moment..."));
                 var firebase = new FirebaseDatabaseRequests();
                 if (!string.IsNullOrEmpty(viewModel.dataModel.Firstname) && !string.IsNullOrEmpty(viewModel.dataModel.Lastname) && !string.IsNullOrEmpty(viewModel.dataModel.Email) && !string.IsNullOrEmpty(viewModel.dataModel.ConfirmPassword))
                 {

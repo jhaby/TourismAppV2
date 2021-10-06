@@ -6,7 +6,7 @@ namespace TourismAppV2.Models
 {
     public  class RestaurantModel
     {
-        public int RestaurantId { get; set; }
+        public string RestaurantId { get; set; }
         public string Name { get; set; }
         public string Location { get; set; }
         public string WorkingHours { get; set; }

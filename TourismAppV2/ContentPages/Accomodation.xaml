@@ -35,7 +35,11 @@
                             <Label FontAttributes="Bold" Text="{Binding CardTitle}" TextColor="Black" FontSize="20" FontFamily="Arial" Padding="10,10,10,0" />
                             <Label Text="{Binding CardDetails}" Padding="10,5,10,5" />
                             <Label Text="{Binding Cost}" HorizontalTextAlignment="Start" FontAttributes="Bold" Padding="10,0,5,0" TextColor="#A5005B" />
-                            <Button BackgroundColor="Black" TextColor="White" CornerRadius="5" HorizontalOptions="Center" Margin="50,20,50,20" Text="Booking" />
+                            <Button BackgroundColor="Black" TextColor="White"
+                                    CornerRadius="5" HorizontalOptions="Center"
+                                    Command="{Binding BookingCommand}"
+                                    CommandParameter="{Binding ItemId}"
+                                    Margin="50,20,50,20" Text="Booking" />
                         </FlexLayout>
                     </Frame>
                    

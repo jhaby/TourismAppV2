@@ -7,6 +7,7 @@ namespace TourismAppV2.Models
 {
     public class ProfileModel : INotifyPropertyChanged
     {
+
         private bool agreement;
         private string confirmPassword;
         private string country;
@@ -17,7 +18,11 @@ namespace TourismAppV2.Models
         private string lastname;
         private string password;
         private string phone;
+        private string photoUri;
+        private string userId;
 
+        public string UserId { get => userId; set => userId = value; }
+        public string PhotoUri { get => photoUri; set => photoUri = value; }
         public bool Agreement { get => agreement; set => agreement = value; }
         public string ConfirmPassword { get => confirmPassword; set => confirmPassword = value; }
         public string Country { get => country; set => country = value; }

@@ -50,9 +50,22 @@ namespace TourismAppV1.Views
 
                     var firebase = new FirebaseDatabaseRequests();
                     var userdata = await firebase.GetProfileData(Email.Text);
+                    if (Preferences.ContainsKey("userdata"))
+                    {
+                        Preferences.Remove("userdata");
+                    }
                     Preferences.Set("userdata", JsonConvert.SerializeObject(userdata));
 
-                    await Navigation.PushAsync(new HomePage());
+                    if (userdata.IsRegularUser)
+                    {
+                        await Navigation.PushAsync(new HomePage());
+                    }
+                    else
+                    {
+                        return;
+                    }
+
+                    
                 }
                 catch(Exception ex)
                 {

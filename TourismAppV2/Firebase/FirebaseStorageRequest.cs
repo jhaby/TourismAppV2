@@ -16,14 +16,15 @@ namespace TourismAppV2.Firebase
             firebase = new FirebaseStorage(FirebaseAssets.FirebaseStorageUri);
         }
 
-        public async Task<string> SaveImageAsync(Stream imgStream, string uri)
+        public async Task<string> SaveImageAsync(Stream imgStream, string location, string uri)
         {
-            var stroageImage = await firebase
+            var storageImage = await firebase
                 .Child("Images")
+                .Child(location)
                 .Child(uri+".jpg")
                 .PutAsync(imgStream);
-            string imgurl = stroageImage;
-            return imgurl;
+
+            return storageImage;
         }
     }
 }

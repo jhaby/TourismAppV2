@@ -22,6 +22,7 @@ namespace TourismAppV2.Models
         private string organisation;
         private string confirmPassword;
 
+        public string PhotoUri { get; set; } = "lion.jpg";
         public bool IsServiceProvider { get => isServiceProvider; set { isServiceProvider = value; OnPropertyChaged("IsServiceProvider"); } }
         public bool IsRegularUser { get => isRegularUser; set { isRegularUser = value; OnPropertyChaged("IsRegularUser"); } }
         public string Firstname { get => firstname; set => firstname = value; }

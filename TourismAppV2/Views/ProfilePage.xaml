@@ -15,14 +15,20 @@
                    Margin="10"
                    IsClippedToBounds="True">
 
-                    <Image Source="lion.jpg" 
+                    <Image Source="{Binding PhotoUri, FallbackValue='lion.jpg'}" 
                        Aspect="AspectFill"
                        HeightRequest="100"
                        HorizontalOptions="Center"
                        VerticalOptions="Center" />
                 </Frame>
 
-                <Label Text="Change photo" HorizontalTextAlignment="Center" TextColor="DodgerBlue" />
+                <Label Text="Change photo"
+                       HorizontalTextAlignment="Center"
+                       TextColor="DodgerBlue">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                    </Label.GestureRecognizers>
+                </Label>
                 <StackLayout Margin="20">
                     <Label Text="Firstname" />
                     <Label Text="{Binding Firstname, FallbackValue='Enter name'}" TextColor="Black" FontSize="18" />

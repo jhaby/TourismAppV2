@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rg.Plugins.Popup.Pages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,11 +11,12 @@ using Xamarin.Forms.Xaml;
 namespace TourismAppV2.Dialogs.CustomDialogs
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PaymentView : ContentPage
+    public partial class PaymentView : PopupPage
     {
         public PaymentView()
         {
             InitializeComponent();
         }
+
     }
 }
