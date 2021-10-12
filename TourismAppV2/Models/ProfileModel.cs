@@ -20,6 +20,7 @@ namespace TourismAppV2.Models
         private string phone;
         private string photoUri;
         private string userId;
+        private string organisation;
 
         public string UserId { get => userId; set => userId = value; }
         public string PhotoUri { get => photoUri; set => photoUri = value; }
@@ -33,6 +34,7 @@ namespace TourismAppV2.Models
         public string Lastname { get => lastname; set => lastname = value; }
         public string Password { get => password; set => password = value; }
         public string Phone { get => phone; set => phone = value; }
+        public string Organisation { get => organisation; set => organisation = value; }
         private void OnPropertyChanged(string member) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(member));
 
         public event PropertyChangedEventHandler PropertyChanged;

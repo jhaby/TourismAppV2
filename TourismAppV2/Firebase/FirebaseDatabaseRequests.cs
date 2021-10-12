@@ -17,6 +17,16 @@ namespace TourismAppV2.Firebase
         {
 
         }
+        public async Task<dynamic> LoadBalanceData(string userid)
+        {
+            var response = (await firebase
+                .Child("Finances")
+                .Child("AccountBalance")
+                .Child(userid)
+                .OnceAsync<dynamic>()).FirstOrDefault();
+
+            return response;
+        }
         public async Task SaveProfileData(SignupModel data)
         {
             await firebase
@@ -28,7 +38,7 @@ namespace TourismAppV2.Firebase
         {
             var profile = (await firebase
              .Child("UserProfiles")
-             .OnceAsync<ProfileModel>()).Where(a => a.Object.UserId == user.UserId).FirstOrDefault();
+             .OnceAsync<ProfileModel>()).Where(a => a.Key == user.UserId).FirstOrDefault();
 
             await firebase
                 .Child("UserProfiles")
@@ -57,6 +67,48 @@ namespace TourismAppV2.Firebase
                     Username = item.Object.Username
                 }).ToList();
         }
+
+        public async Task CreateNewRegCode()
+        {
+            var random = new Random().Next(100000, 999999);
+            ServiceProviders service = new ServiceProviders
+            {
+                ActivationStatus = false,
+                ContactEmail = "jhab@gmail.com",
+                ContactPerson = "Jeremiah",
+                ContactPhone = "23o86789683",
+                Location = "Mabrara",
+                ProviderName = "TOurs XP",
+                RegCode = random.ToString(),
+                ServiceType = "Destination",
+                Username = "Jeremyb 356"
+            };
+
+            await firebase.Child("ServiceProviders")
+                .PostAsync(service);
+        }
+
+        public async Task<ServiceProviders> GetServiceProviderData(string email)
+        {
+            var data = (await firebase
+                .Child("ServiceProviders")
+                .OnceAsync<ServiceProviders>())
+                .Select(item => new ServiceProviders
+                {
+                    ActivationStatus = item.Object.ActivationStatus,
+                    ContactEmail = item.Object.ContactEmail,
+                    ContactPerson = item.Object.ContactPerson,
+                    ContactPhone = item.Object.ContactPhone,
+                    Location = item.Object.Location,
+                    ServiceType = item.Object.ServiceType,
+                    ProviderName = item.Object.ProviderName,
+                    RegCode = item.Object.RegCode,
+                    Username = item.Object.Username,
+                    Key = item.Key
+                }).ToList();
+
+            return data.Find(a => a.ContactEmail == email);
+        }
         public async Task<ProfileModel> GetProfileData(string email)
         {
             var data = (await firebase
@@ -81,12 +133,21 @@ namespace TourismAppV2.Firebase
 
         }
 
-        public async Task SaveTimelineData(dynamic data, string location)
+        public async Task SaveTimelineData(DestinationModel data)
         {
             await firebase.Child("UploadedData")
-                .Child(location)
+                .Child("Destination")
                 .PostAsync(data);
         }
+
+        public async Task SaveTimelineData(TimelineModel data)
+        {
+            await firebase.Child("UploadedData")
+                .Child("Accomodation")
+                .PostAsync(data);
+        }
+
+        
 
         public async Task<List<TimelineModel>> GetTimelineData()
         {
@@ -123,7 +184,6 @@ namespace TourismAppV2.Firebase
                     CardTitle = item.Object.CardTitle,
                     DateTime = item.Object.DateTime,
                     Icon = item.Object.Icon,
-                    BookMark = item.Object.BookMark,
                     Location = item.Object.Location,
                     Likes = item.Object.Likes
                 }).ToList();
@@ -146,6 +206,35 @@ namespace TourismAppV2.Firebase
                     Location = item.Object.Location,
                     Name = item.Object.Name,
                     WorkingHours = item.Object.WorkingHours
+                }).ToList();
+
+            return response;
+        }
+
+        public async Task SaveBookingData(BookingModel data, string category)
+        {
+            await firebase
+                .Child("Booking")
+                .Child(category)
+                .PostAsync(data);
+        }
+
+        public async Task<List<BookingModel>> GetAllBookingData(string userid)
+        {
+            var response = (await firebase
+                .Child("Booking")
+                .Child(userid)
+                .OnceAsync<BookingModel>()).Select(item => new BookingModel
+                {
+                    ItemId = item.Object.ItemId,
+                    Status = item.Object.Status,
+                    BookingDate = item.Object.BookingDate,
+                    Id = item.Key,
+                    Description = item.Object.Description,
+                    Title = item.Object.Title,
+                    Category = item.Object.Category,
+                    Charge = item.Object.Charge,
+                    UserId = item.Object.UserId,
                 }).ToList();
 
             return response;

@@ -13,15 +13,19 @@ using TourismAppV2.Firebase;
 using Xamarin.Essentials;
 using Rg.Plugins.Popup.Services;
 using TourismAppV2.Dialogs.CustomDialogs;
+using TourismAppV2.Views.ServiceProviderViews;
 
 namespace TourismAppV1.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
+        private FirebaseDatabaseRequests firebase;
+
         public LoginPage()
         {
             InitializeComponent();
+            firebase = new FirebaseDatabaseRequests();
         }
 
         private async void Button_Clicked(object sender, EventArgs e)
@@ -48,24 +52,25 @@ namespace TourismAppV1.Views
                     var authrequest = await authprovider.SignInWithEmailAndPasswordAsync(Email.Text, Password.Text);
                     var response =  authrequest.User;
 
-                    var firebase = new FirebaseDatabaseRequests();
                     var userdata = await firebase.GetProfileData(Email.Text);
-                    if (Preferences.ContainsKey("userdata"))
-                    {
-                        Preferences.Remove("userdata");
-                    }
+
+                    Preferences.Clear();
                     Preferences.Set("userdata", JsonConvert.SerializeObject(userdata));
 
-                    if (userdata.IsRegularUser)
+                    if (userdata.IsServiceProvider)
                     {
-                        await Navigation.PushAsync(new HomePage());
+                        var data = await firebase.GetServiceProviderData(userdata.Email);
+                        Preferences.Set("serviceProvider", JsonConvert.SerializeObject(data));
+
+                        await Navigation.PushAsync(new SpMainPage());
                     }
                     else
                     {
-                        return;
+                        await Navigation.PushAsync(new HomePage());
                     }
 
                     
+
                 }
                 catch(Exception ex)
                 {
@@ -81,7 +86,10 @@ namespace TourismAppV1.Views
 
         private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
-            var response = await DisplayPromptAsync("Forgot password", "Enter your email to receive reset code", "Ok", "Cancel", "Email*");
+            await PopupNavigation.Instance.PushAsync(new LoadingDialog("creating user..."));
+            await firebase.CreateNewRegCode();
+            await PopupNavigation.Instance.PopAsync();
+            // var response = await DisplayPromptAsync("Forgot password", "Enter your email to receive reset code", "Ok", "Cancel", "Email*");
         }
     }
 }

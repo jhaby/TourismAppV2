@@ -21,7 +21,7 @@ namespace TourismAppV2.Firebase
             var storageImage = await firebase
                 .Child("Images")
                 .Child(location)
-                .Child(uri+".jpg")
+                .Child(uri + ".jpg")
                 .PutAsync(imgStream);
 
             return storageImage;

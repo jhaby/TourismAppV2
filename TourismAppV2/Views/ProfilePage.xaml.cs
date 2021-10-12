@@ -65,7 +65,7 @@ namespace TourismAppV2.Views
             }
             catch (Exception ex)
             {
-                await DisplayAlert("Failed", ex.Message, "Cancel");
+                await DisplayAlert("Failed", ex.Message , "Cancel");
             }
             finally
             {

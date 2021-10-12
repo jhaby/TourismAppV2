@@ -48,7 +48,11 @@
                                     <Label Text="Bookmark" HorizontalTextAlignment="Center" />
                                 </StackLayout>
                             </StackLayout>
-                            <Button BackgroundColor="Transparent" TextColor="black" BorderColor="Black" BorderWidth="1" CornerRadius="5" HorizontalOptions="Center" Margin="20" Text="Make Reservation" />
+                            <Button BackgroundColor="Transparent" TextColor="black"
+                                    BorderColor="Black" BorderWidth="1" CornerRadius="5"
+                                    Command="{Binding ReservationCommand}"
+                                    HorizontalOptions="Center" Margin="20"
+                                    Text="Make Reservation" />
                         </FlexLayout>
                     </Frame>
 

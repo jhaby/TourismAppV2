@@ -6,6 +6,7 @@ namespace TourismAppV2.Models
 {
     public class ServiceProviders
     {
+        public string Key { get; set; }
         public string RegCode { get; set; }
         public string ProviderName { get; set; }
         public bool ActivationStatus { get; set; }

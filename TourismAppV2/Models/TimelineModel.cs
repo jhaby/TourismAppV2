@@ -12,7 +12,7 @@ namespace TourismAppV2.Models
         public string CardImage { get; set; }
         public string CardTitle { get; set; }
         public string CardDetails { get; set; }
-        public string Cost { get; set; }
-        public DateTime DateTime { get; set; }
+        public int Cost { get; set; }
+        public string DateTime { get; set; }
     }
 }

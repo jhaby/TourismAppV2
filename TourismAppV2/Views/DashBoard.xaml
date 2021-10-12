@@ -5,17 +5,17 @@
             NavigationPage.HasNavigationBar="False"
             NavigationPage.HasBackButton="False">
 
-    <NavigationPage Title="Hotels">
+    <NavigationPage x:Name="hotels" Title="Hotels">
         <x:Arguments>
             <local:Accomodation />
         </x:Arguments>
     </NavigationPage>
-    <NavigationPage Title="Destinations">
+    <NavigationPage x:Name="destinations" Title="Destinations">
         <x:Arguments>
             <local:SitesPage />
         </x:Arguments>
     </NavigationPage>
-    <NavigationPage Title="Restaurants">
+    <NavigationPage x:Name="restaurants" Title="Restaurants">
         <x:Arguments>
             <local:FoodsPage />
         </x:Arguments>

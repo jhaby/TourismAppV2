@@ -10,15 +10,24 @@ using Xamarin.Forms.Xaml;
 using Rg.Plugins.Popup;
 using Rg.Plugins.Popup.Services;
 using TourismAppV2.Dialogs.CustomDialogs;
+using TourismAppV2.ViewModels;
+using Newtonsoft.Json;
+using TourismAppV2.Models;
 
 namespace TourismAppV2.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FinancePage : ContentPage
     {
+        private FinanceViewModel viewModel;
         public FinancePage()
         {
             InitializeComponent();
+            viewModel = new FinanceViewModel(JsonConvert.DeserializeObject<ProfileModel>(
+                Preferences.Get("userdata", null)));
+
+            viewModel.LoadFinanceData();
+            BindingContext = viewModel;
         }
 
         private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
@@ -34,6 +43,7 @@ namespace TourismAppV2.Views
 
         private async void SwipeGestureRecognizer_Swiped(object sender, SwipedEventArgs e)
         {
+            viewModel.IsBusy = true;
             CrossToastPopUp.Current.ShowToastWarning("Refreshing account...");
 
             await PopupNavigation.Instance.PushAsync(new LoadingDialog("Loading financial records..."));

@@ -23,12 +23,16 @@ namespace TourismAppV1.Views
     public partial class Signup : ContentPage
     {
         private SignupViewModel viewModel;
+        private ServiceProviders result;
+        private bool isServiceProvider = false;
+        private FirebaseDatabaseRequests firebase;
+
         public Signup()
         {
             InitializeComponent();
             viewModel = new SignupViewModel();
             BindingContext = viewModel.dataModel;
-
+            firebase = new FirebaseDatabaseRequests();
         }
 
         private async void SwitchBtn_Clicked(object sender, EventArgs e)
@@ -38,23 +42,29 @@ namespace TourismAppV1.Views
             {
                 try
                 {
+                    isServiceProvider = true;
                     string regCode = await DisplayPromptAsync("Confirm", "Enter your registration code", "Verify", "Cancel", "10 digit code", 10);
-                    if (string.IsNullOrEmpty(regCode) || regCode.Length != 10)
+                    if (string.IsNullOrEmpty(regCode) || regCode.Length < 5)
                     {
-                        await DisplayAlert("Invalid input", "Code must be 10 digits", "Cancel");
+                        await DisplayAlert("Invalid input", "Code must be alteast 6 digits", "Cancel");
                     }
                     else
                     {
-                        var firebase = new FirebaseDatabaseRequests();
+                        await PopupNavigation.Instance.PushAsync(new LoadingDialog("Verifying. Please give us a moment..."));
+                        
                         List<ServiceProviders> record = await firebase.GetRegistrationCodes();
-                        var result = record.Find(a => a.RegCode == regCode);
+                        result = record.Find(a => a.RegCode == regCode);
+
                         if (result == null)
+                        {
                             return;
+                        }
                         else
                         {
                             viewModel.dataModel.Organisation = result.ProviderName;
                             viewModel.dataModel.IsServiceProvider = true;
                             viewModel.dataModel.IsRegularUser = false;
+                            viewModel.dataModel.Email = result.ContactEmail;
                             ordinary.TextColor = Color.FromHex("#A5005B");
                             ordinary.BackgroundColor = Color.White;
                             provider.TextColor = Color.White;
@@ -62,14 +72,19 @@ namespace TourismAppV1.Views
                         }
                     }
                 }
-                catch
+                catch(Exception ex)
                 {
-                    return;
+                    await DisplayAlert("Error", ex.Message, "Cancel");
+                }
+                finally
+                {
+                    await PopupNavigation.Instance.PopAsync();
                 }
                 
             }
             else
             {
+                isServiceProvider = false;
                 viewModel.dataModel.IsServiceProvider = false;
                 viewModel.dataModel.IsRegularUser = true;
                 ordinary.TextColor = Color.White;
@@ -83,26 +98,44 @@ namespace TourismAppV1.Views
         {
             try
             {
-                await PopupNavigation.Instance.PushAsync(new LoadingDialog("Creating your account. Please give us a moment..."));
-                var firebase = new FirebaseDatabaseRequests();
-                if (!string.IsNullOrEmpty(viewModel.dataModel.Firstname) && !string.IsNullOrEmpty(viewModel.dataModel.Lastname) && !string.IsNullOrEmpty(viewModel.dataModel.Email) && !string.IsNullOrEmpty(viewModel.dataModel.ConfirmPassword))
+                await PopupNavigation.Instance.PushAsync(new LoadingDialog("Creating your account. Please give us a moment"));
+
+                if (!isServiceProvider)
                 {
-                    if (viewModel.dataModel.ConfirmPassword.Length > 7 || viewModel.dataModel.ConfirmPassword == viewModel.dataModel.Password)
+                    if (!string.IsNullOrEmpty(viewModel.dataModel.Firstname) && !string.IsNullOrEmpty(viewModel.dataModel.Lastname) && !string.IsNullOrEmpty(viewModel.dataModel.Email) && !string.IsNullOrEmpty(viewModel.dataModel.ConfirmPassword))
                     {
-                        var authProvider = new FirebaseAuthProvider(new FirebaseConfig(FirebaseAssets.WebAPIKey));
-                        var request = await authProvider.CreateUserWithEmailAndPasswordAsync(viewModel.dataModel.Email, viewModel.dataModel.Password);
-                        var response = request.RefreshToken;
-                        await firebase.SaveProfileData(viewModel.dataModel);
+                        if (viewModel.dataModel.ConfirmPassword.Length > 7 && viewModel.dataModel.ConfirmPassword == viewModel.dataModel.Password)
+                        {
+                            var authProvider = new FirebaseAuthProvider(new FirebaseConfig(FirebaseAssets.WebAPIKey));
+                            var request = await authProvider.CreateUserWithEmailAndPasswordAsync(viewModel.dataModel.Email, viewModel.dataModel.Password);
 
-                        CrossToastPopUp.Current.ShowToastSuccess("Account created successfully!");
-                        await Navigation.PushAsync(new LoginPage());
-
+                        }
+                        else
+                            await DisplayAlert("Error Password", "Passwords don't match or too short", "OK");
                     }
                     else
-                        await DisplayAlert("Error Password", JsonConvert.SerializeObject(viewModel.dataModel), "OK");
+                    {
+                        await DisplayAlert("Error", "Some fields are not filled", "OK");
+                    }
                 }
                 else
-                    await DisplayAlert("Error", JsonConvert.SerializeObject(viewModel.dataModel), "OK");
+                {
+                    if (viewModel.dataModel.ConfirmPassword.Length > 7 && viewModel.dataModel.ConfirmPassword == viewModel.dataModel.Password)
+                    {
+                        var authProvider = new FirebaseAuthProvider(new FirebaseConfig(FirebaseAssets.WebAPIKey));
+
+                        var request = await authProvider.CreateUserWithEmailAndPasswordAsync(result.ContactEmail, viewModel.dataModel.Password);
+                        
+                    }
+                    else
+                    {
+                        await DisplayAlert("Error Password", "Passwords don't match or too short", "OK");
+                    }
+                }
+                await firebase.SaveProfileData(viewModel.dataModel);
+                CrossToastPopUp.Current.ShowToastSuccess("Account created successfully!");
+                await Navigation.PushAsync(new LoginPage());
+
 
             }
             catch(Exception ex)

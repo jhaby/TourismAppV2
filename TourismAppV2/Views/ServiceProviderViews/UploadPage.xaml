@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:enhancedEntry="clr-namespace:LeoJHarris.FormsPlugin.Abstractions;assembly=LeoJHarris.FormsPlugin.Abstractions" xmlns:customcontrols="clr-namespace:TourismAppV2.CustomControls"
+             Title="Upload content"
+             x:Class="TourismAppV2.Views.ServiceProviderViews.UploadPage">
+    <ContentPage.Content>
+        <ScrollView VerticalOptions="FillAndExpand">
+            <StackLayout Padding="10"  MinimumHeightRequest="500">
+                <enhancedEntry:EnhancedEntry BorderColor="Black"
+                                             Text="{Binding Title, Mode=TwoWay}"
+                                         Placeholder="Title" BorderWidth="2" />
+                <enhancedEntry:EnhancedEntry BorderColor="Black" Keyboard="Numeric"
+                                             Text="{Binding Cost, StringFormat='{0} (USD)', Mode=TwoWay}"
+                                         Placeholder="Cost (USD)" BorderWidth="2" />
+
+                <customcontrols:CustomEditor Placeholder="Description"
+                                             Text="{Binding Description, Mode=TwoWay}"
+                                             HeightRequest="80" />
+
+                <Image Margin="0,10,0,0" Source="{Binding LocalImgSrc}" />
+
+                <Button Margin="30"
+                        CornerRadius="20"
+                        BackgroundColor="DodgerBlue"
+                        Command="{Binding GetPhotoCommand}"
+                        TextColor="White"
+                        Text="Insert photo" />
+
+                <Button Margin="30,10,30,20" CornerRadius="10"
+                        BorderColor="Black" BorderWidth="2"
+                        BackgroundColor="Transparent"
+                        Command="{Binding UploadCommand}"
+                        Text="Upload" />
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

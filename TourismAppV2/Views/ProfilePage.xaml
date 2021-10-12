@@ -15,7 +15,7 @@
                    Margin="10"
                    IsClippedToBounds="True">
 
-                    <Image Source="{Binding PhotoUri, FallbackValue='lion.jpg'}" 
+                    <Image Source="{Binding PhotoUri, FallbackValue='/lion.jpg'}" 
                        Aspect="AspectFill"
                        HeightRequest="100"
                        HorizontalOptions="Center"

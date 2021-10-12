@@ -62,10 +62,16 @@
     <EmbeddedResource Update="Views\ProfilePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\ServiceProviderViews\SpMainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ServiceProviderViews\UploadPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Interfaces\" />
-    <Folder Include="Views\ServiceProviders\" />
+    <Folder Include="Views\ServiceProviderViews\PageViews\" />
   </ItemGroup>
 </Project>
