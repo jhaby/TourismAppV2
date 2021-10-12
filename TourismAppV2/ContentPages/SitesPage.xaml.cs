@@ -15,9 +15,6 @@ namespace TourismAppV2.ContentPages
         public SitesPage()
         {
             InitializeComponent();
-            TimelineViewModel context = new TimelineViewModel();
-            context.LoadDestinationData();
-            timeline.ItemsSource = context.destinationItems;
         }
     }
 }

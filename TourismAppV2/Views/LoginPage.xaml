@@ -15,7 +15,7 @@
                         <GradientStop Offset="1" Color="#090428"/>
                     </LinearGradientBrush>
                 </Grid.Background>
-                <Label Text="Canine Safaris" TextColor="White" HorizontalTextAlignment="Center" Margin="20" FontSize="35" FontAttributes="Bold" />
+                <Label Text="Tourism Guide" TextColor="White" HorizontalTextAlignment="Center" Margin="20" FontSize="35" FontAttributes="Bold" />
 
                 <StackLayout VerticalOptions="EndAndExpand" Padding="0,0,0,50">
                     

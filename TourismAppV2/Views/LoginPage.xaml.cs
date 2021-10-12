@@ -74,7 +74,7 @@ namespace TourismAppV1.Views
                 }
                 catch(Exception ex)
                 {
-                    await DisplayAlert("Access denied", ex.Message, "OK");
+                    await DisplayAlert("Access denied", "Wrong username or password", "OK");
                 }
                 finally
                 {
@@ -86,10 +86,10 @@ namespace TourismAppV1.Views
 
         private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
-            await PopupNavigation.Instance.PushAsync(new LoadingDialog("creating user..."));
-            await firebase.CreateNewRegCode();
-            await PopupNavigation.Instance.PopAsync();
-            // var response = await DisplayPromptAsync("Forgot password", "Enter your email to receive reset code", "Ok", "Cancel", "Email*");
+            //await PopupNavigation.Instance.PushAsync(new LoadingDialog("creating user..."));
+            //await firebase.CreateNewRegCode();
+            //await PopupNavigation.Instance.PopAsync();
+            var response = await DisplayPromptAsync("Forgot password", "Enter your email to receive reset code", "Ok", "Cancel", "Email*");
         }
     }
 }

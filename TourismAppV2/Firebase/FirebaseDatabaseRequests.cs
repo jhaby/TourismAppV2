@@ -223,7 +223,7 @@ namespace TourismAppV2.Firebase
         {
             var response = (await firebase
                 .Child("Booking")
-                .Child(userid)
+                .Child("Accomodation")
                 .OnceAsync<BookingModel>()).Select(item => new BookingModel
                 {
                     ItemId = item.Object.ItemId,

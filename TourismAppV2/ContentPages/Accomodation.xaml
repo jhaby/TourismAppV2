@@ -10,14 +10,15 @@
         <viewmodels:TimelineViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <CollectionView x:Name="timeline" SelectionMode="Single" ItemsSource="{Binding TimelineItems}"
+        <RefreshView IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}" Command="{Binding RefreshViewCommand}">
+            <CollectionView x:Name="timeline" SelectionMode="Single" ItemsSource="{Binding TimelineItems}"
                         
                         SelectionChanged="timeline_SelectionChanged">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame IsClippedToBounds="False" Padding="0,20,0,10" BorderColor="LightGray"  BackgroundColor="White">
-                        <FlexLayout Direction="Column" IsClippedToBounds="True" >
-                            <StackLayout Orientation="Horizontal" VerticalOptions="Center" Padding="10,0,0,10">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame IsClippedToBounds="False" Padding="0,20,0,10" BorderColor="LightGray"  BackgroundColor="White">
+                            <FlexLayout Direction="Column" IsClippedToBounds="True" >
+                                <StackLayout Orientation="Horizontal" VerticalOptions="Center" Padding="10,0,0,10">
                                     <Frame CornerRadius="100" 
                                        HeightRequest="50"
                                        WidthRequest="50"
@@ -31,27 +32,29 @@
                                            HorizontalOptions="Center"
                                            VerticalOptions="Center" />
                                     </Frame>
-                                <StackLayout VerticalOptions="Center">
-                                    <Label Text="{Binding CardAuthor}" VerticalTextAlignment="Center" Margin="0,0,0,-3" Padding="0" FontSize="18" TextColor="Black" FontAttributes="Bold" />
-                                    <Label Text="{Binding DateTime, StringFormat='Posted on: {0:g}'}" FontSize="10" Padding="0" Margin="0" />
+                                    <StackLayout VerticalOptions="Center">
+                                        <Label Text="{Binding CardAuthor}" VerticalTextAlignment="Center" Margin="0,0,0,-3" Padding="0" FontSize="18" TextColor="Black" FontAttributes="Bold" />
+                                        <Label Text="{Binding DateTime, StringFormat='Posted on: {0:g}'}" FontSize="10" Padding="0" Margin="0" />
+                                    </StackLayout>
+
                                 </StackLayout>
-                                    
-                                </StackLayout>
-                            
-                            <Image Source="{Binding CardImage}" VerticalOptions="Start" MinimumHeightRequest="300" />
-                            <Label FontAttributes="Bold" Text="{Binding CardTitle}" TextColor="Black" FontSize="20" FontFamily="Arial" Padding="10,10,10,0" />
-                            <Label Text="{Binding CardDetails}" Padding="10,5,10,5" />
-                            <Label Text="{Binding Cost}" HorizontalTextAlignment="Start" FontAttributes="Bold" Padding="10,0,5,0" TextColor="#A5005B" />
-                            <Button BackgroundColor="Black" TextColor="White"
+
+                                <Image Source="{Binding CardImage}" VerticalOptions="Start" MinimumHeightRequest="300" />
+                                <Label FontAttributes="Bold" Text="{Binding CardTitle}" TextColor="Black" FontSize="20" FontFamily="Arial" Padding="10,10,10,0" />
+                                <Label Text="{Binding CardDetails}" Padding="10,5,10,5" />
+                                <Label Text="{Binding Cost}" HorizontalTextAlignment="Start" FontAttributes="Bold" Padding="10,0,5,0" TextColor="#A5005B" />
+                                <Button BackgroundColor="Black" TextColor="White"
                                     CornerRadius="5" HorizontalOptions="Center"
+                                        IsVisible="{Binding Source={x:Reference AccPage}, Path=BindingContext.BtnVisibility}"
                                     Command="{Binding Source={x:Reference AccPage}, Path=BindingContext.BookingCommand}"
                                     CommandParameter="{Binding}"
                                     Margin="50,20,50,20" Text="Booking" />
-                        </FlexLayout>
-                    </Frame>
-                   
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                            </FlexLayout>
+                        </Frame>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
     </ContentPage.Content>
 </ContentPage>

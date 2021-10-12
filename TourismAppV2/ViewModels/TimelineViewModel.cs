@@ -24,11 +24,23 @@ namespace TourismAppV2.ViewModels
                 OnPropertyChanged(nameof(TimelineItems));
             }
         }
-        public ObservableCollection<DestinationModel> destinationItems { get; set; }
+        public ObservableCollection<DestinationModel> DestinationItems
+        { 
+            get => destinationItems;
+            set
+            {
+                destinationItems = value;
+                OnPropertyChanged("DestinationItems");
+            }
+        }
 
+        public bool IsRefreshing { get; set; } = true;
+        public bool BtnVisibility { get; set; }
+        public Command RefreshViewCommand { get; set; }
         private FirebaseDatabaseRequests firebase;
         private ProfileModel profile;
         private ObservableCollection<TimelineModel> timelineItems;
+        private ObservableCollection<DestinationModel> destinationItems;
 
         public Command<TimelineModel> BookingCommand { get; set; }
         public Command<DestinationModel> ReservationCommand { get; set; }
@@ -37,16 +49,63 @@ namespace TourismAppV2.ViewModels
             profile = new ProfileModel();
             BookingCommand = new Command<TimelineModel>(BookingTapped);
             ReservationCommand = new Command<DestinationModel>(MakeResevation);
+            RefreshViewCommand = new Command(OnRefresh);
             TimelineItems = new ObservableCollection<TimelineModel>();
             destinationItems = new ObservableCollection<DestinationModel>();
             firebase = new FirebaseDatabaseRequests();
             string userdata = Preferences.Get("userdata", null);
             profile = JsonConvert.DeserializeObject<ProfileModel>(userdata);
+            BtnVisibility = Userdata.IsRegularUser;
             LoadTimelineData();
+            LoadDestinationData();
+
 
         }
 
+        private void OnRefresh()
+        {
+            LoadTimelineData();
+            LoadDestinationData();
+        }
+
         private void MakeResevation(DestinationModel item)
+        {
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                try
+                {
+                    bool response = await Application.Current.MainPage.DisplayAlert("Confirm",
+                        $"You are about to book a tour with {item.CardAuthor} at ${item.Cost}, do you want to continue?", "YES", "NO");
+
+                    if (response)
+                    {
+                        await PopupNavigation.Instance.PushAsync(new LoadingDialog("Sending booking data..."));
+                        BookingModel book = new BookingModel
+                        {
+                            UserId = profile.UserId,
+                            Description = item.CardDetails,
+                            Title = item.CardTitle,
+                            BookingDate = DateTime.Now,
+                            Category = "Destination",
+                            Status = false,
+                            Charge = item.Cost,
+                            ItemId = item.ItemId,
+                            ServiceProvider = item.CardAuthor
+                        };
+
+                        await firebase.SaveBookingData(book, "Accomodation");
+                        await PopupNavigation.Instance.PopAsync();
+                    }
+
+                }
+                catch
+                {
+                    return;
+                }
+            });
+        }
+
+        private void BookingTapped(TimelineModel item)
         {
             MainThread.BeginInvokeOnMainThread(async () =>
             {
@@ -83,57 +142,8 @@ namespace TourismAppV2.ViewModels
             });
         }
 
-        private void BookingTapped(TimelineModel item)
-        {
-            MainThread.BeginInvokeOnMainThread(async () =>
-            {
-                try
-                {
-                    bool response = await Application.Current.MainPage.DisplayAlert("Confirm", 
-                        $"You are about to book a room with {item.CardAuthor} at ${item.Cost}, do you want to continue?", "YES", "NO");
-
-                    if (response)
-                    {
-                        await PopupNavigation.Instance.PushAsync(new LoadingDialog("Sending booking data..."));
-                        BookingModel book = new BookingModel
-                        {
-                            UserId = profile.UserId,
-                            Description = item.CardDetails,
-                            Title = item.CardTitle,
-                            BookingDate = DateTime.Now,
-                            Category = "Accomodation",
-                            Status = false,
-                            Charge = item.Cost,
-                            ItemId = item.ItemId,
-                            ServiceProvider = item.CardAuthor
-                        };
-                       
-                        await firebase.SaveBookingData(book, "Accomodation");
-                        await PopupNavigation.Instance.PopAsync();
-                    }
-                    
-                }
-                catch
-                {
-                    return;
-                }
-            });
-        }
-
         public async void LoadTimelineData()
         {
-            TimelineItems.Add(new TimelineModel
-            {
-                ItemId = "1",
-                CardAuthor = "Jeremiah Travels",
-                CardTitle = "Virunga Hotels and Bar",
-                CardDetails = "Come enjoy the luxury of Mt. Mufumbiro with the lovely view of our hotel rooms",
-                Cost = 200,
-                DateTime = DateTime.Now.ToString(),
-                Icon = "home.png",
-                CardImage = "hotel1.jpg"
-            });
-
             await Task.Run(async () =>
             {
                 var data = await firebase.GetTimelineData();
@@ -146,22 +156,12 @@ namespace TourismAppV2.ViewModels
                 });
             });
 
+            IsRefreshing = false;
+
         }
 
         public async void LoadDestinationData()
         {
-            destinationItems.Add(new DestinationModel
-            {
-                ItemId = "1",
-                CardAuthor = "Gorrila Tours Uganda",
-                CardTitle = "Mgahinga National Park",
-                CardDetails = "Located on river Nile and Home of buffalos, with multiple waterfalls, known for its fresh water",
-                CardImage = "chimp.jpg",
-                BookMark = false,
-                Likes = 23,
-                Location = "UGANDA - NorthWestern region"
-            });
-
             await Task.Run(async () =>
             {
                 var data = await firebase.GetDestinationData();
@@ -173,7 +173,7 @@ namespace TourismAppV2.ViewModels
                     }
                 });
             });
-
+            IsRefreshing = false;
         }
     }
 }

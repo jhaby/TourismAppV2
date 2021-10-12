@@ -10,8 +10,9 @@
                 <enhancedEntry:EnhancedEntry BorderColor="Black"
                                              Text="{Binding Title, Mode=TwoWay}"
                                          Placeholder="Title" BorderWidth="2" />
+                <Label Text="Cost" />
                 <enhancedEntry:EnhancedEntry BorderColor="Black" Keyboard="Numeric"
-                                             Text="{Binding Cost, StringFormat='{0} (USD)', Mode=TwoWay}"
+                                             Text="{Binding Cost, Mode=TwoWay}"
                                          Placeholder="Cost (USD)" BorderWidth="2" />
 
                 <customcontrols:CustomEditor Placeholder="Description"

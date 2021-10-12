@@ -30,27 +30,18 @@ namespace TourismAppV2.Views
             BindingContext = viewModel;
         }
 
-        private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        private async void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            bool response = await DisplayAlert("Deposit funds", "You will be redirect to a secure page to make your deposit, is that ok with you?", "Continue", "No, cancel");
+            bool response = await DisplayAlert("Payment", "You are about to be redirected to a secure site to make a payment. Do you want to continue?", "Yes", "No");
             if (response)
             {
                 await Browser.OpenAsync("https://flutterwave.com/pay/huktsurczsaf");
             }
             else
+            {
                 return;
+            }
         }
 
-        private async void SwipeGestureRecognizer_Swiped(object sender, SwipedEventArgs e)
-        {
-            viewModel.IsBusy = true;
-            CrossToastPopUp.Current.ShowToastWarning("Refreshing account...");
-
-            await PopupNavigation.Instance.PushAsync(new LoadingDialog("Loading financial records..."));
-            await Task.Delay(10000);
-            CrossToastPopUp.Current.ShowToastSuccess("Account refreshed");
-
-            await PopupNavigation.Instance.PopAsync();
-        }
     }
 }
