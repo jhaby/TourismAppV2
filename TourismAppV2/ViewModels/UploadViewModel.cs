@@ -27,11 +27,13 @@ namespace TourismAppV2.ViewModels
             data = Preferences.Get("serviceProvider", null);
             serviceProvider = JsonConvert.DeserializeObject<ServiceProviders>(data);
             UploadCommand = new Command(UploadContent);
+            ServiceType = serviceProvider.ServiceType;
             GetPhotoCommand = new Command(AttachPhoto);
         }
         public string Title { get; set; }
         public string Description { get; set; }
         public int Cost { get; set; }
+        public string ServiceType { get; set; }
         public string LocalImgSrc
         {
             get => localImgSrc;

@@ -58,6 +58,8 @@ namespace TourismAppV2.Views
 
                 }
 
+                await PopupNavigation.Instance.PopAsync();
+
             }
             catch (PermissionException pEx)
             {
@@ -66,10 +68,6 @@ namespace TourismAppV2.Views
             catch (Exception ex)
             {
                 await DisplayAlert("Failed", ex.Message , "Cancel");
-            }
-            finally
-            {
-                await PopupNavigation.Instance.PopAsync();
             }
         }
     }

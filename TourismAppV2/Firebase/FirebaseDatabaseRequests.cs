@@ -68,24 +68,24 @@ namespace TourismAppV2.Firebase
                 }).ToList();
         }
 
-        public async Task CreateNewRegCode()
+        public async Task CreateNewRegCode(ServiceProviders data)
         {
-            var random = new Random().Next(100000, 999999);
-            ServiceProviders service = new ServiceProviders
-            {
-                ActivationStatus = false,
-                ContactEmail = "jhab@gmail.com",
-                ContactPerson = "Jeremiah",
-                ContactPhone = "23o86789683",
-                Location = "Mabrara",
-                ProviderName = "TOurs XP",
-                RegCode = random.ToString(),
-                ServiceType = "Destination",
-                Username = "Jeremyb 356"
-            };
+            //var random = new Random().Next(100000, 999999);
+            //ServiceProviders service = new ServiceProviders
+            //{
+            //    ActivationStatus = false,
+            //    ContactEmail = "jhab@gmail.com",
+            //    ContactPerson = "Jeremiah",
+            //    ContactPhone = "23o86789683",
+            //    Location = "Mabrara",
+            //    ProviderName = "TOurs XP",
+            //    RegCode = random.ToString(),
+            //    ServiceType = "Destination",
+            //    Username = "Jeremyb 356"
+            //};
 
             await firebase.Child("ServiceProviders")
-                .PostAsync(service);
+                .PostAsync(data);
         }
 
         public async Task<ServiceProviders> GetServiceProviderData(string email)

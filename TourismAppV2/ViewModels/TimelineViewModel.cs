@@ -25,7 +25,7 @@ namespace TourismAppV2.ViewModels
             }
         }
         public ObservableCollection<DestinationModel> DestinationItems
-        { 
+        {
             get => destinationItems;
             set
             {
@@ -34,13 +34,23 @@ namespace TourismAppV2.ViewModels
             }
         }
 
-        public bool IsRefreshing { get; set; } = true;
+        public bool IsRefreshing
+        {
+            get => isRefreshing;
+            set
+            {
+                isRefreshing = value;
+                OnPropertyChanged("IsRefreshing");
+            }
+        }
+
         public bool BtnVisibility { get; set; }
         public Command RefreshViewCommand { get; set; }
         private FirebaseDatabaseRequests firebase;
         private ProfileModel profile;
         private ObservableCollection<TimelineModel> timelineItems;
         private ObservableCollection<DestinationModel> destinationItems;
+        private bool isRefreshing = true;
 
         public Command<TimelineModel> BookingCommand { get; set; }
         public Command<DestinationModel> ReservationCommand { get; set; }
@@ -144,6 +154,7 @@ namespace TourismAppV2.ViewModels
 
         public async void LoadTimelineData()
         {
+            IsRefreshing = true;
             await Task.Run(async () =>
             {
                 var data = await firebase.GetTimelineData();
@@ -162,6 +173,7 @@ namespace TourismAppV2.ViewModels
 
         public async void LoadDestinationData()
         {
+            IsRefreshing = true;
             await Task.Run(async () =>
             {
                 var data = await firebase.GetDestinationData();

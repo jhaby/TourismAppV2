@@ -13,18 +13,23 @@ using TourismAppV2.Dialogs.CustomDialogs;
 using TourismAppV2.ViewModels;
 using Newtonsoft.Json;
 using TourismAppV2.Models;
+using Flutterwave.Net;
 
 namespace TourismAppV2.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FinancePage : ContentPage
     {
+        private ProfileModel profile;
+
+        //private readonly string apiKey = "FLWSECK-df4c34ca9bfcc0756d68c65c564bae61-X"
         private FinanceViewModel viewModel;
         public FinancePage()
         {
             InitializeComponent();
-            viewModel = new FinanceViewModel(JsonConvert.DeserializeObject<ProfileModel>(
-                Preferences.Get("userdata", null)));
+            profile = JsonConvert.DeserializeObject<ProfileModel>(
+                Preferences.Get("userdata", null));
+            viewModel = new FinanceViewModel(profile);
 
             viewModel.LoadFinanceData();
             BindingContext = viewModel;
@@ -32,14 +37,17 @@ namespace TourismAppV2.Views
 
         private async void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            bool response = await DisplayAlert("Payment", "You are about to be redirected to a secure site to make a payment. Do you want to continue?", "Yes", "No");
-            if (response)
+            if (profile.IsRegularUser)
             {
-                await Browser.OpenAsync("https://flutterwave.com/pay/huktsurczsaf");
-            }
-            else
-            {
-                return;
+                bool response = await DisplayAlert("Payment", "You are about to be redirected to a secure site to make a payment. Do you want to continue?", "Yes", "No");
+                if (response)
+                {
+                    await Browser.OpenAsync("https://flutterwave.com/pay/tourismguidepayment");
+                }
+                else
+                {
+                    return;
+                }
             }
         }
 

@@ -30,10 +30,15 @@ namespace TourismAppV2.ViewModels
         public async void LoadFinanceData()
         {
             IsBusy = true;
-            var result = await firebase.GetAllBookingData(profile.UserId);
+            var result = (await firebase.GetAllBookingData(profile.UserId));
             foreach (var i in result)
             {
-                financeRecords.Add(i);
+                i.Balance = i.Charge - i.AmountPaid;
+                if(i.ServiceProvider == profile.Organisation)
+                {
+                    financeRecords.Add(i);
+                }
+                
             }
             IsBusy = false;
             if(result.Count > 0)

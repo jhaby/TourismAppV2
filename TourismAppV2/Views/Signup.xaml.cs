@@ -43,32 +43,44 @@ namespace TourismAppV1.Views
                 try
                 {
                     isServiceProvider = true;
-                    string regCode = await DisplayPromptAsync("Confirm", "Enter your registration code", "Verify", "Cancel", "10 digit code", 10);
+                    string regCode = await DisplayPromptAsync("Confirm", "Enter your registration code", "Verify", "Cancel", "6 digit code", 6);
                     if (string.IsNullOrEmpty(regCode) || regCode.Length < 5)
                     {
                         await DisplayAlert("Invalid input", "Code must be alteast 6 digits", "Cancel");
                     }
                     else
                     {
-                        await PopupNavigation.Instance.PushAsync(new LoadingDialog("Verifying. Please give us a moment..."));
-                        
-                        List<ServiceProviders> record = await firebase.GetRegistrationCodes();
-                        result = record.Find(a => a.RegCode == regCode);
-
-                        if (result == null)
+                        if (Connectivity.NetworkAccess == NetworkAccess.Internet)
                         {
-                            return;
+                            await PopupNavigation.Instance.PushAsync(new LoadingDialog("Verifying. Please give us a moment..."));
+
+                            RemoteService httpRequest = new RemoteService();
+                            string data = await httpRequest.ValidateCodeAsync(regCode);
+
+                            List<ServiceProviders> record = await firebase.GetRegistrationCodes();
+                            result = record.Find(a => a.RegCode == regCode);
+
+                            if (result == null)
+                            {
+                                return;
+                            }
+                            else
+                            {
+                                viewModel.dataModel.Organisation = result.ProviderName;
+                                viewModel.dataModel.IsServiceProvider = true;
+                                viewModel.dataModel.IsRegularUser = false;
+                                viewModel.dataModel.Email = result.ContactEmail;
+                                ordinary.TextColor = Color.FromHex("#A5005B");
+                                ordinary.BackgroundColor = Color.White;
+                                provider.TextColor = Color.White;
+                                provider.BackgroundColor = Color.FromHex("#A5005B");
+
+                                //await firebase.CreateNewRegCode(result);
+                            }
                         }
                         else
                         {
-                            viewModel.dataModel.Organisation = result.ProviderName;
-                            viewModel.dataModel.IsServiceProvider = true;
-                            viewModel.dataModel.IsRegularUser = false;
-                            viewModel.dataModel.Email = result.ContactEmail;
-                            ordinary.TextColor = Color.FromHex("#A5005B");
-                            ordinary.BackgroundColor = Color.White;
-                            provider.TextColor = Color.White;
-                            provider.BackgroundColor = Color.FromHex("#A5005B");
+                            await DisplayAlert("Internet", "No internet connection", "OK");
                         }
                     }
                 }

@@ -14,6 +14,8 @@ namespace TourismAppV2.Models
         public string Category { get; set; }
         public string Description { get; set; }
         public int Charge { get; set; }
+        public int AmountPaid { get; set; }
+        public int Balance { get; set; }
         public DateTime BookingDate { get; set; }
         public bool Status { get; set; }
     }

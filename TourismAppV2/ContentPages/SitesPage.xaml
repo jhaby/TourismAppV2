@@ -9,7 +9,7 @@
         <viewmodels:TimelineViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <RefreshView IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}" Command="{Binding RefreshViewCommad}">
+        <RefreshView IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}" Command="{Binding RefreshViewCommand}">
             <CollectionView x:Name="timeline" ItemsSource="{Binding DestinationItems}" SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
