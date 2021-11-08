@@ -25,7 +25,7 @@ namespace TourismAppV2.Helpers
             string data = null;
             try
             {
-                var response = await _client.GetAsync("https://adhere.co.ug/tourism/validate.php?code=" + code);
+                var response = await _client.GetAsync("https://caninesafaris.com/tourism/validate.php?code=" + code);
                 response.EnsureSuccessStatusCode();
                 data = await response.Content.ReadAsStringAsync();
                 if (response.IsSuccessStatusCode)

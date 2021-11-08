@@ -5,6 +5,7 @@ using Xamarin.Forms;
 using Firebase.Auth;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace TourismAppV2.ViewModels
 {
@@ -22,6 +23,9 @@ namespace TourismAppV2.ViewModels
                 var authrequest = await authprovider.SignInWithEmailAndPasswordAsync(email, pass);
                 var response = await authrequest.GetFreshAuthAsync();
                 var credentials = JsonConvert.SerializeObject(response);
+
+                Preferences.Set("email", email);
+                Preferences.Set("password", pass);
 
                 return true;
             }
