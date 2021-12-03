@@ -60,11 +60,7 @@ namespace TourismAppV1.Views
                             List<ServiceProviders> record = await firebase.GetRegistrationCodes();
                             result = record.Find(a => a.RegCode == regCode);
 
-                            if (result == null)
-                            {
-                                return;
-                            }
-                            else
+                            if (result != null)
                             {
                                 viewModel.dataModel.Organisation = result.ProviderName;
                                 viewModel.dataModel.IsServiceProvider = true;
@@ -74,8 +70,6 @@ namespace TourismAppV1.Views
                                 ordinary.BackgroundColor = Color.White;
                                 provider.TextColor = Color.White;
                                 provider.BackgroundColor = Color.FromHex("#A5005B");
-
-                                //await firebase.CreateNewRegCode(result);
                             }
                         }
                         else

@@ -13,15 +13,14 @@ namespace TourismAppV2.Firebase
     public class FirebaseStorageRequest
     {
         private FirebaseStorage firebase;
-        private FirebaseAuthProvider auth;
-
+        public string Token { get; set; }
         public FirebaseStorageRequest()
         {
             firebase = new FirebaseStorage(FirebaseAssets.FirebaseStorageUri,
                 new FirebaseStorageOptions
                 {
-                    AuthTokenAsyncFactory = () => Task.FromResult(Preferences.Get("fToken", null)),
-                    ThrowOnCancel = false
+                    AuthTokenAsyncFactory = () => Task.FromResult(Token),
+                    ThrowOnCancel = false       
                 });
 
         }

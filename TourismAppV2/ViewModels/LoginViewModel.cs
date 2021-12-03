@@ -24,9 +24,6 @@ namespace TourismAppV2.ViewModels
                 var response = await authrequest.GetFreshAuthAsync();
                 var credentials = JsonConvert.SerializeObject(response);
 
-                Preferences.Set("email", email);
-                Preferences.Set("password", pass);
-
                 return true;
             }
             catch

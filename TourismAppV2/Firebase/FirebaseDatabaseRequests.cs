@@ -14,23 +14,25 @@ namespace TourismAppV2.Firebase
 {
     public class FirebaseDatabaseRequests
     {
-        private FirebaseClient firebase = new FirebaseClient(FirebaseAssets.FirebaseDBUri);
+        private string email = null;
+        private string password = null;
         public FirebaseDatabaseRequests()
         {
 
         }
-        private async Task LoginAsync()
+        private async Task<FirebaseClient> LoginAsync()
         {
             var authprovider = new FirebaseAuthProvider(new FirebaseConfig(FirebaseAssets.WebAPIKey));
-            var authrequest = await authprovider.SignInWithEmailAndPasswordAsync(Preferences.Get("password", null), Preferences.Get("password", null));
-            //firebase = new FirebaseClient(FirebaseAssets.FirebaseDBUri, new FirebaseOptions
+            return new FirebaseClient(FirebaseAssets.FirebaseDBUri);
+            //var authrequest = await authprovider.SignInWithEmailAndPasswordAsync(email, password);
+            //return new FirebaseClient(FirebaseAssets.FirebaseDBUri, new FirebaseOptions
             //{
             //    AuthTokenAsyncFactory = () => Task.FromResult(authrequest.FirebaseToken)
-            //}) ;
+            //});
         }
         public async Task<dynamic> LoadBalanceData(string userid)
         {
-            //await LoginAsync();
+           var firebase = await LoginAsync();
 
             var response = (await firebase
                 .Child("Finances")
@@ -42,7 +44,7 @@ namespace TourismAppV2.Firebase
         }
         public async Task SaveProfileData(SignupModel data)
         {
-            //await LoginAsync();
+            var firebase = await LoginAsync();
 
             await firebase
                 .Child("UserProfiles")
@@ -51,7 +53,7 @@ namespace TourismAppV2.Firebase
 
         public async Task UpdateProfilePhoto(ProfileModel user)
         {
-            //await LoginAsync();
+            var firebase = await LoginAsync();
 
             var profile = (await firebase
              .Child("UserProfiles")
@@ -64,7 +66,7 @@ namespace TourismAppV2.Firebase
         }
         public async Task<List<DestinationModel>> GetDashboardData()
         {
-            //await LoginAsync();
+            var firebase = await LoginAsync();
 
             return (await firebase
                 .Child("Dashboard")
@@ -72,7 +74,7 @@ namespace TourismAppV2.Firebase
         }
         public async Task<List<ServiceProviders>> GetRegistrationCodes()
         {
-            //await LoginAsync();
+            var firebase = await LoginAsync();
 
             return (await firebase.Child("ServiceProviders")
                 .OnceAsync<ServiceProviders>()).Select(item => new ServiceProviders
@@ -91,21 +93,7 @@ namespace TourismAppV2.Firebase
 
         public async Task CreateNewRegCode(ServiceProviders data)
         {
-            //await LoginAsync();
-
-            //var random = new Random().Next(100000, 999999);
-            //ServiceProviders service = new ServiceProviders
-            //{
-            //    ActivationStatus = false,
-            //    ContactEmail = "jhab@gmail.com",
-            //    ContactPerson = "Jeremiah",
-            //    ContactPhone = "23o86789683",
-            //    Location = "Mabrara",
-            //    ProviderName = "TOurs XP",
-            //    RegCode = random.ToString(),
-            //    ServiceType = "Destination",
-            //    Username = "Jeremyb 356"
-            //};
+            var firebase = await LoginAsync();
 
             await firebase.Child("ServiceProviders")
                 .PostAsync(data);
@@ -113,7 +101,7 @@ namespace TourismAppV2.Firebase
 
         public async Task<ServiceProviders> GetServiceProviderData(string email)
         {
-            //await LoginAsync();
+            var firebase = await LoginAsync();
 
             var data = (await firebase
                 .Child("ServiceProviders")
@@ -136,7 +124,7 @@ namespace TourismAppV2.Firebase
         }
         public async Task<ProfileModel> GetProfileData(string email)
         {
-            //await LoginAsync();
+            var firebase = await LoginAsync();
 
             var data = (await firebase
               .Child("UserProfiles")
@@ -162,7 +150,7 @@ namespace TourismAppV2.Firebase
 
         public async Task SaveTimelineData(DestinationModel data)
         {
-            //await LoginAsync();
+            var firebase = await LoginAsync();
 
             await firebase.Child("UploadedData")
                 .Child("Destination")
@@ -171,7 +159,7 @@ namespace TourismAppV2.Firebase
 
         public async Task SaveTimelineData(TimelineModel data)
         {
-            //await LoginAsync();
+            var firebase = await LoginAsync();
 
             await firebase.Child("UploadedData")
                 .Child("Accomodation")
@@ -182,7 +170,7 @@ namespace TourismAppV2.Firebase
 
         public async Task<List<TimelineModel>> GetTimelineData()
         {
-            //await LoginAsync();
+            var firebase = await LoginAsync();
 
             var response = (await firebase
                     .Child("UploadedData")
@@ -205,7 +193,7 @@ namespace TourismAppV2.Firebase
 
         public async Task<List<DestinationModel>> GetDestinationData()
         {
-            //await LoginAsync();
+            var firebase = await LoginAsync();
 
             var response = (await firebase
                 .Child("UploadedData")
@@ -229,7 +217,7 @@ namespace TourismAppV2.Firebase
 
         public async Task<List<RestaurantModel>> GetRestaurantData()
         {
-            //await LoginAsync();
+            var firebase = await LoginAsync();
 
             var response = (await firebase
                 .Child("UploadedData")
@@ -250,7 +238,7 @@ namespace TourismAppV2.Firebase
 
         public async Task SaveBookingData(BookingModel data, string category)
         {
-            //await LoginAsync();
+            var firebase = await LoginAsync();
 
             await firebase
                 .Child("Booking")
@@ -260,7 +248,7 @@ namespace TourismAppV2.Firebase
 
         public async Task<List<BookingModel>> GetAllBookingData(string userid)
         {
-            //await LoginAsync();
+            var firebase = await LoginAsync();
 
             var response = (await firebase
                 .Child("Booking")
@@ -283,7 +271,7 @@ namespace TourismAppV2.Firebase
 
         //public async Task UploadData()
         //{
-        ////await LoginAsync();
+        //var firebase = await LoginAsync();
         //
         //    var toUpdatePerson = (await firebase
         //      .Child("Persons")
