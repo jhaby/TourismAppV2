@@ -5,10 +5,10 @@
              Title="Upload content"
              x:Class="TourismAppV2.Views.ServiceProviderViews.UploadPage">
     <ContentPage.Content>
-        <ScrollView VerticalOptions="FillAndExpand">
-            <Grid VerticalOptions="Fill">
+        <ScrollView VerticalOptions="Fill">
+            <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
+                    <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
                     <RowDefinition Height=" auto" />
@@ -27,9 +27,10 @@
                     <customcontrols:CustomEditor Placeholder="Description"
                                              Text="{Binding Description, Mode=TwoWay}"
                                              HeightRequest="80" />
+                    <Image Margin="0,10,0,0" Source="{Binding LocalImgSrc}" />
                 </StackLayout>
 
-                <Image Margin="0,10,0,0" Grid.Row="1" Source="{Binding LocalImgSrc}" />
+                
 
                     <Button Margin="30"
                         CornerRadius="20"

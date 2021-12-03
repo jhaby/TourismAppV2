@@ -208,7 +208,8 @@ namespace TourismAppV2.Firebase
                     DateTime = item.Object.DateTime,
                     Icon = item.Object.Icon,
                     Location = item.Object.Location,
-                    Likes = item.Object.Likes
+                    Likes = item.Object.Likes,
+                    Cost = item.Object.Cost
                 }).ToList();
 
             return response;

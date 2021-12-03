@@ -109,14 +109,11 @@ namespace TourismAppV2.ViewModels
                         }
 
                     }
+                    await PopupNavigation.Instance.PopAsync();
                 }
                 catch(Exception ex)
                 {
                     await Application.Current.MainPage.DisplayAlert("Failed", ex.Message, "OK");
-                }
-                finally
-                {
-                    await PopupNavigation.Instance.PopAsync();
                 }
             });
         }
@@ -132,8 +129,9 @@ namespace TourismAppV2.ViewModels
                         return;
                     }
                     LocalImgSrc = photo.FullPath;
-                    await PopupNavigation.Instance.PushAsync(new LoadingDialog("Uploading photo..."));
-                    
+                    //await PopupNavigation.Instance.PushAsync(new LoadingDialog("Uploading photo..."));
+                    //await PopupNavigation.Instance.PopAsync();
+
 
                 }
                 catch (PermissionException)
@@ -143,10 +141,6 @@ namespace TourismAppV2.ViewModels
                 catch (Exception ex)
                 {
                     await Application.Current.MainPage.DisplayAlert("Failed", ex.Message, "Cancel");
-                }
-                finally
-                {
-                    await PopupNavigation.Instance.PopAsync();
                 }
             });
         }

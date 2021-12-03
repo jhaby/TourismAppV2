@@ -155,6 +155,7 @@ namespace TourismAppV2.ViewModels
         public async void LoadTimelineData()
         {
             IsRefreshing = true;
+            TimelineItems.Clear();
             await Task.Run(async () =>
             {
                 var data = await firebase.GetTimelineData();
@@ -174,6 +175,7 @@ namespace TourismAppV2.ViewModels
         public async void LoadDestinationData()
         {
             IsRefreshing = true;
+            destinationItems.Clear();
             await Task.Run(async () =>
             {
                 var data = await firebase.GetDestinationData();
